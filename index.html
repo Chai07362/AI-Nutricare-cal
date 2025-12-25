@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI NutriCare</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    .form-box {
+      background-color: #ffffff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      width: 350px;
+      margin: auto;
+      margin-top: 80px;
+      text-align: center;
+    }
+    .form-box input {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+    .form-box button {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      background: #4facfe;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .form-box button:hover {
+      background: #00c6ff;
+    }
+    /* Dark mode */
+    .dark-mode {
+      background-color: #1a202c;
+      color: #f7fafc;
+    }
+    .dark-mode input, .dark-mode button {
+      background-color: #2d3748;
+      color: #f7fafc;
+    }
+    /* Prevent overlap with fixed navbar */
+#homePage, #aboutPage, #scannerPage, #settingsPage, #chatPage {
+  padding-top: 80px; /* adjust if needed */
+}
+/* Animation for fade-in effect */
+.fade-in {
+  animation: fadeIn 0.6s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+nav a {
+  position: relative;
+  transition: color 0.3s ease;
+}
+nav a::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: yellow;
+  transition: width 0.3s ease;
+}
+nav a:hover::after {
+  width: 100%;
+}
+/* Chat animations */
+@keyframes slideInRight {
+  from { transform: translateX(50px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+@keyframes slideInLeft {
+  from { transform: translateX(-50px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+.user-msg {
+  animation: slideInRight 0.4s ease forwards;
+}
+.bot-msg {
+  animation: slideInLeft 0.4s ease forwards;
+}
+button:active {
+  transform: scale(0.95);
+  transition: transform 0.1s;
+}
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeUp 0.8s ease forwards;
+}
+
+.reveal:nth-child(1) { animation-delay: 0.2s; }
+.reveal:nth-child(2) { animation-delay: 0.6s; }
+.reveal:nth-child(3) { animation-delay: 1s; }
+.reveal:nth-child(4) { animation-delay: 1.4s; }
+.reveal:nth-child(5) { animation-delay: 1.8s; }
+.reveal:nth-child(6) { animation-delay: 2.2s; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+  </style>
+</head>
+<body class="bg-gray-100">
+
+  <!-- ================= LOGIN PAGE ================= -->
+  <div id="loginPage" class="form-box">
+    <h2 class="font-bold text-xl">Login</h2>
+    <form id="loginForm">
+      <input type="email" id="loginEmail" placeholder="Email" required>
+      <input type="password" id="loginPassword" placeholder="Password" required>
+      <button type="button" onclick="login()">Login</button>
+    </form>
+    <p class="mt-4">Don't have an account? 
+      <a href="#" onclick="toggleSignup()" class="text-blue-600">Sign Up</a>
+    </p>
+  </div>
+
+  <!-- ================= SIGNUP PAGE ================= -->
+  <div id="signupPage" class="form-box" style="display:none;">
+    <h2 class="font-bold text-xl">Sign Up</h2>
+    <form id="signupForm">
+      <input type="text" id="signupName" placeholder="Full Name" required>
+      <input type="number" id="signupAge" placeholder="Age" required>
+      <input type="number" id="signupWeight" placeholder="Weight (kg)" required>
+      <input type="text" id="signupHealth" placeholder="Health Issues (if any)">
+
+<input type="email" id="signupEmail" placeholder="Email" required>
+      <input type="password" id="signupPassword" placeholder="Password" required>
+      <button type="button" onclick="signup()">Create Account</button>
+    </form>
+    <p class="mt-4">Already have an account? 
+      <a href="#" onclick="toggleLogin()" class="text-blue-600">Login</a>
+    </p>
+  </div>
+
+  <!-- ================= MAIN APP CONTENT ================= -->
+  <div id="appContent" style="display:none;">
+    <!-- Background image with overlay text -->
+    <div class="relative h-screen" id="homePage">
+      <img src="https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg" 
+           class="absolute inset-0 w-full h-full object-cover">
+      <div class="absolute inset-0 bg-black bg-opacity-40 flex flex-col items-center justify-center text-white text-center p-6">
+        <h1 class="text-4xl font-bold">AI NutriCare 🍏</h1>
+        <p class="text-lg mt-4">Upload your meals, track calories, and stay healthy with AI</p>
+      </div>
+    </div>
+
+
+    <!-- ABOUT PAGE -->
+<div id="aboutPage" style="display:none;" class="p-8 space-y-3">
+  <h2 class="text-2xl font-bold reveal">About AI NutriCare</h2>
+  
+  <p class="mt-2 reveal">AI Nutricare is an intelligent web-based platform designed to help people stay healthy by tracking their food intake automatically.</p>
+  
+  <p class="reveal">With the power of AI, Computer Vision, and Nutrition Science, it allows users to upload or scan their meal and instantly see nutrition analysis.</p>
+  
+  <p class="reveal">👉 Go to the Scanner tab, upload your food image, and press "Analyze".</p>
+  
+  <p class="reveal">Within seconds, you’ll get detected food items, calories, and full nutritional breakdown.</p>
+  
+  <p class="reveal">⚡ AI Nutricare = Your personal smart diet assistant 💪🍎</p>
+</div>
+
+
+
+    <!-- SCANNER PAGE -->
+    <div id="scannerPage" style="display:none;" class="p-8">
+      <h1 class="text-xl font-bold">Food Scanner</h1>
+      <form id="scanForm">
+        <input type="file" id="fileInputScanner" accept="image/*" required>
+        <button type="submit" class="bg-green-600 text-white px-4 py-2 mt-2">Analyze Food</button>
+      </form>
+      <div id="result" class="mt-4 p-4 border hidden">
+        <h3>Analysis Result</h3>
+        <p id="analysisText"></p>
+      </div>
+    </div>
+
+    <!-- SETTINGS PAGE -->
+    <div id="settingsPage" style="display:none;" class="p-8">
+      <h2 class="text-2xl font-bold mb-4">Settings</h2>
+      <div class="mb-6">
+        <label for="volume" class="block font-semibold">Sound / Volume</label>
+        <input type="range" id="volume" name="volume" min="0" max="100" value="50" class="w-full mt-2">
+      </div>
+      <div class="mb-6">
+        <label class="flex items-center space-x-2">
+          <input type="checkbox" id="darkModeToggle" onclick="toggleDarkMode()">
+          <span class="font-semibold">Enable Dark Mode</span>
+        </label>
+      </div>
+      <div class="mb-6">
+        <label class="flex items-center space-x-2">
+          <input type="checkbox" id="notifyToggle" checked>
+          <span class="font-semibold">Enable Notifications</span>
+        </label>
+      </div>
+      <div class="mb-6">
+        <button onclick="logout()" class="px-4 py-2 bg-red-600 text-white rounded-lg shadow">Logout</button>
+      </div>
+    </div>
+
+
+    <!-- CHAT PAGE (AI Assistant) -->
+<div id="chatPage" style="display:none;" class="h-screen flex flex-col bg-gray-900">
+  <!-- Chat messages container -->
+  <div id="chatBox" class="flex-1 overflow-y-auto p-4 space-y-3">
+    <div class="text-center text-gray-400">🤖 Welcome to AI NutriCare Assistant! <br> Type your query below 👇</div>
+  </div>
+
+  <!-- Chat input area -->
+  <div class="bg-gray-800 p-4 flex items-center space-x-3">
+    <input id="userInput" type="text" placeholder="Type your message..."
+
+class="flex-1 px-4 py-2 rounded-lg bg-gray-700 text-white focus:outline-none">
+    <button onclick="sendMessage()" 
+            class="bg-yellow-400 text-black font-bold px-4 py-2 rounded-lg hover:bg-yellow-500">Send</button>
+  </div>
+</div>
+
+
+<!-- ================= NAVBAR ================= -->
+<nav class="fixed top-0 left-0 w-full flex justify-center space-x-10 py-5 z-50 bg-transparent">
+  <a href="#" onclick="showPage('homePage')" class="text-yellow-400 font-bold hover:text-white">Home</a>
+  <a href="#" onclick="showPage('aboutPage')" class="text-yellow-400 font-bold hover:text-white">About</a>
+  <a href="https://ai-nutricare-analysis.streamlit.app/" class="text-yellow-400 font-bold hover:text-white">Upload</a>
+  <a href="#" onclick="showPage('settingsPage')" class="text-yellow-400 font-bold hover:text-white">Settings</a>
+  <a href="#" onclick="showPage('chatPage')" class="text-yellow-400 font-bold hover:text-white">AI Assistant</a>
+</nav>
+
+  <!-- ================= JAVASCRIPT ================= -->
+  <script>
+    // Show specific page
+    function showPage(pageId) {
+      ["homePage","aboutPage","scannerPage","settingsPage","chatPage"].forEach(id => {
+        document.getElementById(id).style.display = "none";
+      });
+      document.getElementById(pageId).style.display = "block";
+    }
+
+    // Signup
+    function signup() {
+      const email = document.getElementById("signupEmail").value;
+      const password = document.getElementById("signupPassword").value;
+      localStorage.setItem("userEmail", email);
+      localStorage.setItem("userPassword", password);
+      alert("Account created successfully! Please login.");
+      toggleLogin();
+    }
+
+    // Login
+    function login() {
+      const email = document.getElementById("loginEmail").value;
+      const password = document.getElementById("loginPassword").value;
+      const storedEmail = localStorage.getItem("userEmail");
+      const storedPassword = localStorage.getItem("userPassword");
+
+      if (email === storedEmail && password === storedPassword) {
+        document.getElementById("loginPage").style.display = "none";
+        document.getElementById("signupPage").style.display = "none";
+        document.getElementById("appContent").style.display = "block";
+        showPage("homePage");
+      } else {
+        alert("Invalid email or password!");
+      }
+    }
+
+    // Logout
+    function logout() {
+      document.getElementById("appContent").style.display = "none";
+      document.getElementById("loginPage").style.display = "block";
+    }
+
+    // Toggle forms
+    function toggleSignup() {
+      document.getElementById("loginPage").style.display = "none";
+      document.getElementById("signupPage").style.display = "block";
+    }
+    function toggleLogin() {
+      document.getElementById("signupPage").style.display = "none";
+      document.getElementById("loginPage").style.display = "block";
+    }
+
+    // Dark mode toggle
+    function toggleDarkMode() {
+      document.body.classList.toggle("dark-mode");
+    }
+
+    // Chatbot message function
+function sendMessage() {
+  const input = document.getElementById("userInput");
+  const chatBox = document.getElementById("chatBox");
+  const message = input.value.trim();
+
+  if (message === "") return;
+
+  // Add user message
+  const userMsg = document.createElement("div");
+  userMsg.className = "bg-yellow-400 text-black px-4 py-2 rounded-lg max-w-xs self-end ml-auto";
+  userMsg.innerText = message;
+  chatBox.appendChild(userMsg);
+
+  input.value = "";
+
+  // Auto-scroll to bottom
+  chatBox.scrollTop = chatBox.scrollHeight;
+
+  // Simulate AI reply
+  setTimeout(() => {
+    const botMsg = document.createElement("div");
+    botMsg.className = "bg-gray-700 text-white px-4 py-2 rounded-lg max-w-xs";
+    botMsg.innerText = "🤖 AI Assistant: I'm analyzing your query... (demo reply)";
+    chatBox.appendChild(botMsg);
+
+chatBox.scrollTop = chatBox.scrollHeight;
+  }, 1000);
+}
+function showPage(pageId) {
+  ["homePage","aboutPage","scannerPage","settingsPage","chatPage"].forEach(id => {
+    document.getElementById(id).style.display = "none";
+  });
+  const page = document.getElementById(pageId);
+  page.style.display = "block";
+  page.classList.add("fade-in");   // Add animation
+  setTimeout(() => page.classList.remove("fade-in"), 600); // Remove after animation
+}
+// Add user message
+const userMsg = document.createElement("div");
+userMsg.className = "bg-yellow-400 text-black px-4 py-2 rounded-lg max-w-xs self-end ml-auto user-msg";
+userMsg.innerText = message;
+chatBox.appendChild(userMsg);
+
+// Simulate AI reply
+setTimeout(() => {
+  const botMsg = document.createElement("div");
+  botMsg.className = "bg-gray-700 text-white px-4 py-2 rounded-lg max-w-xs bot-msg";
+  botMsg.innerText = "🤖 AI Assistant: I'm analyzing your query... (demo reply)";
+  chatBox.appendChild(botMsg);
+}, 1000);
+function showPage(pageId) {
+  ["homePage","aboutPage","scannerPage","settingsPage","chatPage"].forEach(id => {
+    document.getElementById(id).style.display = "none";
+  });
+
+  const page = document.getElementById(pageId);
+  page.style.display = "block";
+
+  // Restart animation for reveal elements
+  const reveals = page.querySelectorAll(".reveal");
+  reveals.forEach(el => {
+    el.style.animation = "none";
+    el.offsetHeight; // trigger reflow
+    el.style.animation = "";
+  });
+}
+
+  </script>
+
+</body>
+</html>
