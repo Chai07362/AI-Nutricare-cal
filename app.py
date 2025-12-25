@@ -2,21 +2,23 @@ import streamlit as st
 from PIL import Image
 from gemini_helper import get_gemini_response
 
-st.set_page_config(page_title=" AI Calories Calculator")
-st.header("🍎AI Calories Calculator")
+st.set_page_config(
+    page_title="AI NutriCare",
+    layout="wide"
+)
 
-uploaded_file = st.file_uploader("Choose a food image...", type=["jpg","jpeg","png"])
+st.header("🥗 AI NutriCare")
 
-def input_image_setup(uploaded_file):
-    if uploaded_file:
-        return [{"mime_type": uploaded_file.type, "data": uploaded_file.getvalue()}]
-    return None
+uploaded_file = st.file_uploader(
+    "📸 Upload food image",
+    type=["jpg", "jpeg", "png"]
+)
 
 if uploaded_file:
     image = Image.open(uploaded_file)
-    st.image(image, caption="Uploaded Image", width=250)
+    st.image(image, use_column_width=True)
 
-submit = st.button("Tell me about the total calories")
+submit = st.button("🔍 Analyze Calories")
 
 input_prompt = """
 You are a nutritionist. Analyze the food items in the image and calculate:
@@ -37,4 +39,5 @@ if submit and uploaded_file:
     with st.spinner("Analyzing food..."):
         response = get_gemini_response(input_prompt, image_data)
     st.subheader("🔎 Analysis")
+
     st.write(response)
