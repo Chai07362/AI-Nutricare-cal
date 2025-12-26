@@ -70,14 +70,14 @@ Then provide:
 
 Output format (STRICT):
 
-Item 1:
+Food Item 1:
 - Name:
 - Calories:
 - Carbs:
 - Protein:
 - Fat:
 
-Item 2:
+Food Item 2:
 - Name:
 - Calories:
 - Carbs:
@@ -126,6 +126,7 @@ use_container_width=True)
 
         st.subheader("🔎 Analysis")
         st.write(response)
+
 
 
 
