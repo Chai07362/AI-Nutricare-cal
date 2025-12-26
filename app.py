@@ -36,15 +36,22 @@ add_bg_from_local("static/food_bg.jpg")
 
 st.markdown("""
 <div style="
-background-image: url('https://images.unsplash.com/photo-1498837167922-ddd27525d352');
+background: linear-gradient(
+    rgba(0,0,0,0.55),
+    rgba(0,0,0,0.55)
+),
+url('https://images.unsplash.com/photo-1498837167922-ddd27525d352');
 background-size: cover;
-padding: 30px;
-border-radius: 20px;
+background-position: center;
+padding: 25px;
+border-radius: 16px;
 color: white;
 text-align: center;
-margin-bottom: 30px;">
-<h2>🥗 AI NutriCare</h2>
-<p>Smart calorie & nutrition insights</p>
+margin-bottom: 25px;">
+<h2 style="margin-bottom: 8px;">🥗 AI NutriCare</h2>
+<p style="font-size: 14px; opacity: 0.9;">
+Smart calorie & nutrition insights
+</p>
 </div>
 """, unsafe_allow_html=True)
 
@@ -132,6 +139,7 @@ if uploaded_file:
 
         st.subheader("🔎 Analysis")
         st.write(response)
+
 
 
 
