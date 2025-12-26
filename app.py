@@ -34,6 +34,20 @@ def add_bg_from_local(image_file):
 
 add_bg_from_local("static/food_bg.jpg")
 
+st.markdown("""
+<div style="
+background-image: url('https://images.unsplash.com/photo-1498837167922-ddd27525d352');
+background-size: cover;
+padding: 30px;
+border-radius: 20px;
+color: white;
+text-align: center;
+margin-bottom: 30px;">
+<h2>🥗 AI NutriCare</h2>
+<p>Smart calorie & nutrition insights</p>
+</div>
+""", unsafe_allow_html=True)
+
 
 input_prompt = """
 You are a certified nutritionist and dietician with expertise in Indian and global cuisines.
@@ -118,6 +132,7 @@ if uploaded_file:
 
         st.subheader("🔎 Analysis")
         st.write(response)
+
 
 
 
