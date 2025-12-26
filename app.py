@@ -113,7 +113,7 @@ uploaded_file = st.file_uploader(
 
 if uploaded_file:
     image = Image.open(uploaded_file)
-    st.image(image, use_column_width=True)
+    st.image(image, use_container_width=True)
 
     submit = st.button("🔍 Analyze Calories")
 
@@ -125,6 +125,7 @@ if uploaded_file:
 
         st.subheader("🔎 Analysis")
         st.write(response)
+
 
 
 
