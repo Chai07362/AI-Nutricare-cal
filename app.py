@@ -2,6 +2,41 @@ import streamlit as st
 from PIL import Image
 from gemini_helper import get_gemini_response
 
+st.markdown(
+    """
+    <style>
+    /* Main background */
+    .stApp {
+        background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+    }
+
+    /* Title */
+    h1 {
+        color: #0f172a;
+        text-align: center;
+    }
+
+    /* Upload box */
+    section[data-testid="stFileUploader"] {
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 15px;
+        border: 1px solid #cbd5e1;
+    }
+
+    /* Button */
+    button {
+        background-color: #22c55e !important;
+        color: white !important;
+        border-radius: 10px !important;
+        font-weight: bold !important;
+    }
+
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
 st.set_page_config(
     page_title="AI NutriCare",
     layout="wide"
@@ -90,6 +125,7 @@ if uploaded_file:
 
         st.subheader("🔎 Analysis")
         st.write(response)
+
 
 
 
