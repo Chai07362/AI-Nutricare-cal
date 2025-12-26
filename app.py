@@ -103,7 +103,7 @@ def input_image_setup(uploaded_file):
         }]
     return None
 
-st.header("🥗 AI NutriCare")
+st.header(" ⬆️Upload Image")
 st.write("Upload a food image to get calorie & nutrition insights")
 
 uploaded_file = st.file_uploader(
@@ -126,6 +126,7 @@ use_container_width=True)
 
         st.subheader("🔎 Analysis")
         st.write(response)
+
 
 
 
