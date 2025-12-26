@@ -11,28 +11,9 @@ st.set_page_config(
 def add_bg_from_local(image_file):
     with open(image_file, "rb") as f:
         encoded_string = base64.b64encode(f.read()).decode()
-    st.markdown(
-        f"""
-        <style>
-        .stApp {{
-            background-image: url("data:image/jpg;base64,{encoded_string}");
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-        }}
+    
 
-        .block-container {{
-            background-color: rgba(255, 255, 255, 0.9);
-            padding: 2rem;
-            border-radius: 20px;
-        }}
-        </style>
-        """,
-        unsafe_allow_html=True
-    )
 
-add_bg_from_local("static/food_bg.jpg")
 
 st.markdown("""
 <div style="
@@ -139,6 +120,7 @@ if uploaded_file:
 
         st.subheader("🔎 Analysis")
         st.write(response)
+
 
 
 
