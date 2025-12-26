@@ -8,7 +8,7 @@ st.set_page_config(
 )
 
 st.header("🥗 AI NutriCare")
-st.write("Upload food image to get calorie & nutrition insights")
+st.write("Upload a food image to get calorie & nutrition insights")
 
 uploaded_file = st.file_uploader(
     "📸 Upload food image",
@@ -19,7 +19,17 @@ if uploaded_file:
     image = Image.open(uploaded_file)
     st.image(image, use_column_width=True)
 
-submit = st.button("🔍 Analyze Calories")
+    submit = st.button("🔍 Analyze Calories")
+
+    if submit:
+        image_data = input_image_setup(uploaded_file)
+
+        with st.spinner("Analyzing food..."):
+            response = get_gemini_response(input_prompt, image_data)
+
+        st.subheader("📊 Nutrition Analysis")
+        st.write(response)
+    
 
 input_prompt = """
 You are a nutritionist. Analyze the food items in the image and calculate:
@@ -35,12 +45,5 @@ Total: _ calories
 Healthiness: _
 """
 
-if submit and uploaded_file:
-    image_data = input_image_setup(uploaded_file)
-    with st.spinner("Analyzing food..."):
-        response = get_gemini_response(input_prompt, image_data)
-   
-    st.subheader("🔎 Analysis")
-    st.write(response)
 
 
