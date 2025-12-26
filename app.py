@@ -39,7 +39,7 @@ Smart calorie & nutrition insights
 st.image(
     "static/food_bg.jpg",
     caption="🍽️ Balanced meal example",
-    use_column_width=True
+    use_container_width=True
 )
 
 input_prompt = """
@@ -126,6 +126,7 @@ use_container_width=True)
 
         st.subheader("🔎 Analysis")
         st.write(response)
+
 
 
 
