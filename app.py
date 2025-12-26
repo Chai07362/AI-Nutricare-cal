@@ -7,6 +7,20 @@ st.set_page_config(
     layout="wide"
 )
 
+input_prompt = """
+You are a nutritionist. Analyze the food items in the image and calculate:
+1. Calories per food item
+2. Total calories
+3. Whether the food is healthy or not
+
+Format:
+1. Item 1 - calories
+2. Item 2 - calories
+...
+Total: _ calories
+Healthiness: _
+"""
+
 def input_image_setup(uploaded_file):
     if uploaded_file is not None:
         return [{
@@ -37,22 +51,6 @@ if uploaded_file:
 
         st.subheader("🔎 Analysis")
         st.write(response)
-    
-
-input_prompt = """
-You are a nutritionist. Analyze the food items in the image and calculate:
-1. Calories per food item
-2. Total calories
-3. Whether the food is healthy or not
-
-Format:
-1. Item 1 - calories
-2. Item 2 - calories
-...
-Total: _ calories
-Healthiness: _
-"""
-
 
 
 
