@@ -36,22 +36,11 @@ Smart calorie & nutrition insights
 </div>
 """, unsafe_allow_html=True)
 
-st.markdown("""
-<div style="
-background: white;
-padding: 15px;
-border-radius: 16px;
-max-width: 700px;
-margin: 20px auto;
-box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-">
-<img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c"
-     style="width:100%; border-radius:12px;">
-<p style="text-align:center; margin-top:10px; color:#475569;">
-Sample meal analyzed by AI NutriCare
-</p>
-</div>
-""", unsafe_allow_html=True)
+st.image(
+    "static/food_bg.jpg",
+    caption="🍽️ Balanced meal example",
+    use_column_width=True
+)
 
 input_prompt = """
 You are a certified nutritionist and dietician with expertise in Indian and global cuisines.
@@ -136,6 +125,7 @@ if uploaded_file:
 
         st.subheader("🔎 Analysis")
         st.write(response)
+
 
 
 
