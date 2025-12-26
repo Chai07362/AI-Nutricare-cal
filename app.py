@@ -34,6 +34,40 @@ def add_bg_from_local(image_file):
 
 add_bg_from_local("static/food_bg.jpg")
 
+st.markdown(
+    """
+    <style>
+    /* Main background */
+    .stApp {
+        background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+    }
+
+    /* Title */
+    h1 {
+        color: #0f172a;
+        text-align: center;
+    }
+
+    /* Upload box */
+    section[data-testid="stFileUploader"] {
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 15px;
+        border: 1px solid #cbd5e1;
+    }
+
+    /* Button */
+    button {
+        background-color: #22c55e !important;
+        color: white !important;
+        border-radius: 10px !important;
+        font-weight: bold !important;
+    }
+
+    </style>
+    """,
+    unsafe_allow_html=True
+)
 
 input_prompt = """
 You are a certified nutritionist and dietician with expertise in Indian and global cuisines.
@@ -118,6 +152,7 @@ if uploaded_file:
 
         st.subheader("🔎 Analysis")
         st.write(response)
+
 
 
 
