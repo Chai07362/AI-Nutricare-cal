@@ -8,6 +8,7 @@ st.set_page_config(
 )
 
 st.header("🥗 AI NutriCare")
+st.write("Upload food image to get calorie & nutrition insights")
 
 uploaded_file = st.file_uploader(
     "📸 Upload food image",
@@ -38,6 +39,7 @@ if submit and uploaded_file:
     image_data = input_image_setup(uploaded_file)
     with st.spinner("Analyzing food..."):
         response = get_gemini_response(input_prompt, image_data)
-    st.subheader("🔎 Analysis")
-
+   
+    st.subheader("📊 Nutrition Analysis")
     st.write(response)
+
