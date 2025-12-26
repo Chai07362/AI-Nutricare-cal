@@ -7,6 +7,14 @@ st.set_page_config(
     layout="wide"
 )
 
+def input_image_setup(uploaded_file):
+    if uploaded_file is not None:
+        return [{
+            "mime_type": uploaded_file.type,
+            "data": uploaded_file.getvalue()
+        }]
+    return None
+
 st.header("🥗 AI NutriCare")
 st.write("Upload a food image to get calorie & nutrition insights")
 
@@ -44,6 +52,7 @@ Format:
 Total: _ calories
 Healthiness: _
 """
+
 
 
 
