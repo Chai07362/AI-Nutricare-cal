@@ -40,6 +40,7 @@ if submit and uploaded_file:
     with st.spinner("Analyzing food..."):
         response = get_gemini_response(input_prompt, image_data)
    
-    st.subheader("📊 Nutrition Analysis")
+    st.subheader("🔎 Analysis")
     st.write(response)
+
 
