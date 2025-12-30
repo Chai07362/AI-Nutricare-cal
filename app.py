@@ -36,63 +36,117 @@ Smart calorie & nutrition insights
 </div>
 """, unsafe_allow_html=True)
 
+st.header(" ⬆️Upload Image")
+st.write("Upload a food image to get calorie & nutrition insights")
+
+uploaded_file = st.file_uploader(
+    "📸 Upload food image",
+    type=["jpg", "jpeg", "png"]
+)
+
 st.image(
     "static/food_bg.jpg",
-    caption="🍽️ Balanced meal example",
+    caption="🍽️ Make informed food choices with instant calorie and nutrition analysis",
     use_container_width=True
 )
 
-
 input_prompt = """
-You are a caring nutrition coach.
+You are a certified clinical nutritionist and registered dietitian
+with expertise in food composition analysis, Indian and global cuisines,
+and evidence-based dietary guidelines.
 
-Analyze the uploaded food image and help the user understand their meal in a supportive and honest way.
+Your task is to analyze the uploaded food image and deliver a precise,
+structured, and user-friendly nutrition report.
 
-Your goals:
-- Appreciate what is good about the meal
-- Point out nutritional gaps gently
-- Help the user make better choices without guilt
+STRICT ANALYSIS RULES:
+- Identify ONLY food items clearly visible in the image.
+- Do NOT assume hidden ingredients or cooking methods.
+- If portion size is unclear, clearly state the assumption made.
+- Use standard nutrition reference values (per 100g) from reliable databases.
+- Avoid vague language such as "approximate" unless unavoidable.
+- Be confident, factual, and concise.
 
-Steps:
-1. Identify only the visible food items.
-2. Estimate portion size for each item (small / medium / large).
-3. Provide approximate calories per item.
-4. Calculate the total calorie range of the meal.
-5. Estimate key nutrients (protein, carbohydrates, fats, fiber).
-6. Mention at least one positive nutritional aspect.
-7. Mention at least one area of concern or improvement.
-8. Suggest 1 small, realistic improvement the user can apply next time.
+FOR EACH IDENTIFIED FOOD ITEM, PROVIDE:
 
-Guidelines:
-- Be respectful, encouraging, and non-judgmental.
-- Use simple language; avoid medical terms.
-- If the image is unclear, say so politely.
-- Calories and nutrients are estimates, not exact values.
-- Do NOT give medical advice.
+1. Food Identification:
+- Name of food item
+- Assumed portion weight (grams), if not provided by user
 
-Respond strictly in this format:
+2. Nutrition Breakdown (EXACT VALUES):
+- Calories (kcal per 100g)
+- Carbohydrates (g per 100g)
+- Protein (g per 100g)
+- Fat (g per 100g)
+- Fiber (g per 100g)
 
-🍽️ What’s on your plate:
-- Item – Portion – Calories (approx)
+3. Daily Requirement Contribution (PERCENTAGE):
+Calculate contribution based on an average adult daily requirement:
+- Calories (%)
+- Carbohydrates (%)
+- Protein (%)
+- Fat (%)
 
-🔥 Total Calories:
-- ___ to ___ kcal
+4. Total Nutrition for the Estimated Portion:
+- Total calories
+- Total carbohydrates
+- Total protein
+- Total fat
 
-🥗 Nutrition Breakdown (Approx):
-- Protein: ___ g
-- Carbohydrates: ___ g
-- Fats: ___ g
-- Fiber: ___ g
+AFTER ANALYSIS, PROVIDE:
 
-✅ What’s good about this meal:
-- ___
+GOOD POINTS (Bullet format, short):
+- Nutritional strengths of this food
 
-⚠️ What could be better:
-- ___
+LIMITATIONS / CONCERNS (Bullet format, short):
+- Nutritional weaknesses or health concerns
 
-💡 Gentle nutrition tip:
-- One simple, caring suggestion
+OVERALL ASSESSMENT:
+- Health Category: Healthy / Moderately Healthy / Unhealthy
+- One practical improvement suggestion
 
+CONFIDENCE SCORE:
+- Reliability of analysis (0–100%)
+
+OUTPUT FORMAT (STRICT — FOLLOW EXACTLY):
+
+Food Item:
+Assumed Portion Weight (g):
+
+Nutrition per 100g:
+- Calories:
+- Carbohydrates:
+- Protein:
+- Fat:
+- Fiber:
+
+Daily Requirement Contribution (% per 100g):
+- Calories:
+- Carbohydrates:
+- Protein:
+- Fat:
+
+Total Nutrition for Estimated Portion:
+- Calories:
+- Carbohydrates:
+- Protein:
+- Fat:
+
+Good Points:
+- 
+- 
+
+Concerns:
+- 
+- 
+
+Health Category:
+Improvement Suggestion:
+Confidence Score:
+
+Medical Disclaimer:
+This AI-generated nutrition analysis is for informational purposes only.
+It does not replace professional medical or dietary advice.
+Consult a qualified healthcare professional for personalized guidance.
 """
 
 def input_image_setup(uploaded_file):
@@ -103,20 +157,12 @@ def input_image_setup(uploaded_file):
         }]
     return None
 
-st.header(" ⬆️Upload Image")
-st.write("Upload a food image to get calorie & nutrition insights")
-
-uploaded_file = st.file_uploader(
-    "📸 Upload food image",
-    type=["jpg", "jpeg", "png"]
-)
 
 if uploaded_file:
     image = Image.open(uploaded_file)
-    st.image(image,
-use_container_width=True)
+    st.image(image, use_container_width=True)
 
-    submit = st.button("🔍 Analyze Calories")
+    submit = st.button("🍛 Analyze Nutrition")
 
     if submit:
         image_data = input_image_setup(uploaded_file)
@@ -124,8 +170,9 @@ use_container_width=True)
         with st.spinner("Analyzing food..."):
             response = get_gemini_response(input_prompt, image_data)
 
-        st.subheader("🔎 Analysis")
+        st.subheader("🔎Nutrition Analysis")
         st.write(response)
+
 
 
 
